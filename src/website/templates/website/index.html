@@ -1,6 +1,24 @@
-<h1>Actividades</h1>
-<ul>
-    {% for activity in activities %}
-    <li>{{activity.title}}</li>
-    {% endfor %}
-</ul>
+{% load static %}
+
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="">
+</head>
+<body ng-app="{% block ng_app %}travelmaker{% endblock %}">
+<div class="content" ng-controller="{% block ng_controller %}main_controller{% endblock %}">{% block content %}
+{% verbatim %}
+    <div class="panel" ng-repeat="activity in activities">
+        <div class="panel-heading clearfix">
+            <h3 class="panel-title">{{ activity.title }}</h3>
+            <author class="pull-right">{{ activity.description }}</author>
+        </div>
+        <p class="well">{{ post.body }}</p>
+    </div>
+{% endverbatim %}
+{% endblock %}</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+<script src="{% static "website/js/index.js" %}"></script>
+
+</body>
+</html>
