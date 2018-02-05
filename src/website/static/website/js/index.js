@@ -5,3 +5,7 @@ app.controller('main_controller', function($scope, $http) {
             $scope.activities = response.data;
         });
 });
+
+$('.ui.accordion')
+  .accordion()
+;

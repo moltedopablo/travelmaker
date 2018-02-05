@@ -2,21 +2,32 @@
 
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="">
+<link rel="stylesheet" type="text/css" href="{% static "website/semantic-ui/semantic.min.css" %}">
 </head>
 <body ng-app="{% block ng_app %}travelmaker{% endblock %}">
 <div class="content" ng-controller="{% block ng_controller %}main_controller{% endblock %}">{% block content %}
 {% verbatim %}
-    <div class="panel" ng-repeat="activity in activities">
-        <div class="panel-heading clearfix">
-            <h3 class="panel-title">{{ activity.title }}</h3>
-            <author class="pull-right">{{ activity.description }}</author>
+
+
+    <div class="ui styled accordion">
+        <div ng-repeat="activity in activities">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                {{ activity.title }}
+            </div>
+            <div class="content">
+                <p class="transition">{{ activity.description }}</p>
+            </div>
         </div>
-        <p class="well">{{ post.body }}</p>
+
     </div>
-{% endverbatim %}
+
+
+    {% endverbatim %}
 {% endblock %}</div>
 
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="{% static "website/semantic-ui/semantic.min.js" %}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
 <script src="{% static "website/js/index.js" %}"></script>
 
