@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from .models import Activity, Trip
+from .models import Activity, Trip, Itinerary, DayRange, Reservation, DayRangeActivities
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
-from .serializers import ActivitySerializer, TripSerializer
+from .serializers import ActivitySerializer, TripSerializer, ItinerarySerializer, DayRangeSerializer, \
+    ReservationSerializer, DayRangeActivitiesSerializer
 from rest_framework import generics
 
 
@@ -19,6 +20,26 @@ class TripViewSet(viewsets.ModelViewSet):
 class ActivityViewSet(viewsets.ModelViewSet):
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
+
+
+class ItineraryViewSet(viewsets.ModelViewSet):
+    queryset = Itinerary.objects.all()
+    serializer_class = ItinerarySerializer
+
+
+class DayRangeViewSet(viewsets.ModelViewSet):
+    queryset = DayRange.objects.all()
+    serializer_class = DayRangeSerializer
+
+
+class DayRangeActivitiesViewSet(viewsets.ModelViewSet):
+    queryset = DayRangeActivities.objects.all()
+    serializer_class = DayRangeActivitiesSerializer
+
+
+class ReservationViewSet(viewsets.ModelViewSet):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
 
 
 class ActivityList(generics.ListAPIView):
