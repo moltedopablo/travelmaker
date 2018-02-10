@@ -5,7 +5,7 @@ from rest_framework import serializers
 class TripSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Trip
-        fields = ('title', 'created_date')
+        fields = ('id', 'title', 'created_date')
 
 
 class ActivitySerializer(serializers.HyperlinkedModelSerializer):

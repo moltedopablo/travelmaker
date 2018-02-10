@@ -47,8 +47,8 @@ class ActivityList(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = Activity.objects.all()
-        title = self.request.query_params.get('title', None)
+        trip = self.request.query_params.get('trip', None)
 
-        if title is not None:
-            queryset = queryset.filter(title__search=title)
+        if trip is not None:
+            queryset = queryset.filter(trip=trip)
         return queryset
