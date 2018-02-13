@@ -30,6 +30,7 @@ class ItineraryViewSet(viewsets.ModelViewSet):
 class DayRangeViewSet(viewsets.ModelViewSet):
     queryset = DayRange.objects.all()
     serializer_class = DayRangeSerializer
+    filter_fields = ('itinerary', 'start', 'end', 'activities')
 
 
 class DayRangeActivitiesViewSet(viewsets.ModelViewSet):

@@ -32,18 +32,18 @@ app.controller('main_controller', function ($scope, $http) {
     });
 
 
-    // $scope.$watch('current_itinerary', function () {
-    //     if ($scope.current_trip !== null) {
-    //         $http.get('api/activitie?trip=' + $scope.current_trip.id).then(function (response) {
-    //             $scope.activities = response.data;
-    //         });
-    //
-    //         $http.get('api/itinerary_list?trip=' + $scope.current_trip.id).then(function (response) {
-    //             $scope.itineraries = response.data;
-    //             $scope.current_itinerary = $scope.itineraries[0];
-    //         });
-    //     }
-    // });
+    $scope.$watch('current_itinerary', function () {
+        if ($scope.current_itinerary !== null) {
+            $http.get('api/day_ranges?itinerary=' + $scope.current_itinerary.id).then(function (response) {
+                $scope.day_ranges = response.data;
+            });
+
+            // $http.get('api/itinerary_list?trip=' + $scope.current_trip.id).then(function (response) {
+            //     $scope.itineraries = response.data;
+            //     $scope.current_itinerary = $scope.itineraries[0];
+            // });
+        }
+    });
 
     $scope.change_current_trip = function (trip) {
         $scope.current_trip = trip;

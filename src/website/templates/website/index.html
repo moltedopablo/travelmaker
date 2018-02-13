@@ -62,8 +62,18 @@
                 <div id="mapid"></div>
             </div>
             <div class="column">
-                <p></p>
-                <p></p>
+                <div class="ui styled accordion">
+                    <div ng-repeat="day_range in day_ranges">
+                        <div class="title">
+                            <i class="dropdown icon"></i>
+                            {{day_range.start}} - {{ day_range.end }}
+                        </div>
+                        <div class="content">
+                            <p class="transition"></p>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
