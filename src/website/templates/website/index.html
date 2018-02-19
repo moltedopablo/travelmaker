@@ -69,7 +69,18 @@
                             {{day_range.start}} - {{ day_range.end }}
                         </div>
                         <div class="content">
-                            <p class="transition"></p>
+                            <p class="transition">
+                                <div ng-repeat="act in day_range.activities">
+                                    <div class="title">
+                                        <i class="dropdown icon"></i>
+                                        {{ act.title }}
+                                    </div>
+                                    <div class="content">
+                                        <p class="transition">{{ act.description }}</p>
+                                    </div>
+                                </div>
+
+                            </p>
                         </div>
                     </div>
 

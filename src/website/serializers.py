@@ -26,13 +26,16 @@ class ReservationSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('trip', 'date', 'title', 'description')
 
 
-class DayRangeSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = DayRange
-        fields = ('itinerary', 'start', 'end', 'activities')
-
-
 class DayRangeActivitiesSerializer(serializers.HyperlinkedModelSerializer):
+    day_range = serializers.PrimaryKeyRelatedField(queryset=DayRange.objects.all(), source='parent.id')
     class Meta:
         model = DayRangeActivities
         fields = ('activity', 'day_range')
+
+
+class DayRangeSerializer(serializers.HyperlinkedModelSerializer):
+    activities = ActivitySerializer(many=True, read_only=True)
+
+    class Meta:
+        model = DayRange
+        fields = ('itinerary', 'start', 'end', 'activities')
