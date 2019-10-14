@@ -12,7 +12,6 @@ router.register(r'reservations', views.ReservationViewSet)
 router.register(r'day_range_activities', views.DayRangeActivitiesViewSet)
 
 urlpatterns = [
-    path('', views.index, name='index'),
     url(r'api/', include(router.urls)),
     url(r'api/api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

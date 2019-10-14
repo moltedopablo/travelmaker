@@ -5,11 +5,6 @@ from .serializers import ActivitySerializer, TripSerializer, ItinerarySerializer
     ReservationSerializer, DayRangeActivitiesSerializer
 
 
-def index(request):
-    activities = Activity.objects.order_by('order')
-    return render(request, 'website/index.html', {'activities': activities})
-
-
 class TripViewSet(viewsets.ModelViewSet):
     queryset = Trip.objects.all().order_by('-created_date')
     serializer_class = TripSerializer
