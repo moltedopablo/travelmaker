@@ -10,6 +10,8 @@ import {
   Icon
 } from "semantic-ui-react";
 
+import EmptySpace from "./EmptySpace";
+
 class ActivitiesList extends React.Component {
   constructor(props) {
     super(props);
@@ -24,26 +26,7 @@ class ActivitiesList extends React.Component {
         <Card.Content>
           <List relaxed="divided">
             {this.props.activities.length === 0 &&
-              <div>
-                <p class="empty-message">
-                  Wow, such an empty space, so sad, please add some activities :)
-                </p>
-                <Placeholder fluid>
-                  <Placeholder.Line />
-                  <Placeholder.Line />
-                  <Placeholder.Line />
-                  <Placeholder.Line />
-                  <Placeholder.Line />
-                  <Placeholder.Line />
-                  <Placeholder.Line />
-                  <Placeholder.Line />
-                  <Placeholder.Line />
-                  <Placeholder.Line />
-                  <Placeholder.Line />
-                  <Placeholder.Line />
-                  <Placeholder.Line />
-                </Placeholder>
-              </div>
+              <EmptySpace elementName={'activities'} />
             }
             {this.props.activities.map(activity => (
               <List.Item>

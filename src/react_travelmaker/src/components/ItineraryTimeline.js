@@ -2,6 +2,8 @@ import React from "react";
 import { Button, Modal, Image, Header, List, Card } from "semantic-ui-react";
 import { Timeline, TimelineItem } from "vertical-timeline-component-for-react";
 
+import EmptySpace from "./EmptySpace";
+
 class ItineraryTimeline extends React.Component {
   constructor(props) {
     super(props);
@@ -22,22 +24,30 @@ class ItineraryTimeline extends React.Component {
           </Card.Header>
         </Card.Content>
         <Card.Content>
-          {this.props.selectedItinerary === null && (
-            <List divided verticalAlign="middle">
-              {this.props.itineraries.map(itinerary => (
-                <List.Item>
-                  <List.Content floated="right">
-                    <Button
-                      onClick={e => this.props.selectItinerary(itinerary.id)}
-                    >
-                      Select
-                    </Button>
-                  </List.Content>
-                  <List.Content>{itinerary.title}</List.Content>
-                </List.Item>
-              ))}
-            </List>
-          )}
+          {this.props.selectedItinerary === null &&
+            this.props.itineraries.length === 0 && (
+              <EmptySpace elementName={"itineraries"} />
+            )}
+          {this.props.selectedItinerary === null &&
+            this.props.itineraries.length > 0 && (
+              <List relaxed="divided">
+                {this.props.itineraries.map(itinerary => (
+                  <List.Item>
+                    <List.Content floated="right">
+                      <Button
+                        onClick={e => this.props.selectItinerary(itinerary.id)}
+                      >
+                        Select
+                      </Button>
+                    </List.Content>
+                    <List.Content>
+                      <List.Icon name="ligth-red sort numeric down" />
+                      {itinerary.title}
+                    </List.Content>
+                  </List.Item>
+                ))}
+              </List>
+            )}
           {this.props.selectedItinerary !== null &&
             this.props.dayRanges.length > 0 && (
               <Timeline lineColor={"#ddd"}>
