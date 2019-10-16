@@ -1,15 +1,6 @@
 import React from "react";
-import {
-  Button,
-  Modal,
-  Image,
-  Header,
-  List,
-  Card,
-  Grid,
-  Container
-} from "semantic-ui-react";
-import logo from "./logo.svg";
+import { Grid, Container } from "semantic-ui-react";
+
 import NavBar from "./components/NavBar";
 import TripChooser from "./components/TripChooser";
 import ItineraryTimeline from "./components/ItineraryTimeline";
@@ -30,16 +21,23 @@ class App extends React.Component {
       itineraries: []
     };
 
+    this.fetchTrips = this.fetchTrips.bind(this);
     this.fetchItineraries = this.fetchItineraries.bind(this);
     this.fetchActivities = this.fetchActivities.bind(this);
     this.clearTrip = this.clearTrip.bind(this);
+    this.clearSelectedItinerary = this.clearSelectedItinerary.bind(this);
     this.postTrip = this.postTrip.bind(this);
+    this.postActivity = this.postActivity.bind(this);
     this.selectTrip = this.selectTrip.bind(this);
     this.fetchDayRanges = this.fetchDayRanges.bind(this);
     this.selectedItinerary = this.selectedItinerary.bind(this);
   }
 
   componentDidMount() {
+    this.fetchTrips();
+  }
+
+  fetchTrips() {
     fetch("//localhost:8000/api/trips/?format=json")
       .then(res => res.json())
       .then(data => {
@@ -88,9 +86,30 @@ class App extends React.Component {
       });
   }
 
+  postActivity(title, description) {
+    fetch("//localhost:8000/api/activities/?format=json", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        trip:
+          "http://localhost:8000/api/trips/" + this.state.selectedTrip + "/",
+        title: title,
+        description: description
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.fetchActivities(this.state.selectedTrip);
+      });
+  }
+
   selectTrip(trip) {
     this.setState({ selectedTrip: trip });
     this.setState({ selectedItinerary: null });
+    this.fetchTrips();
     this.fetchItineraries(trip);
     this.fetchActivities(trip);
   }
@@ -103,6 +122,10 @@ class App extends React.Component {
 
   clearTrip() {
     this.setState({ selectedTrip: null });
+  }
+
+  clearSelectedItinerary() {
+    this.setState({ selectedItinerary: null });
   }
 
   render() {
@@ -123,12 +146,17 @@ class App extends React.Component {
           <Grid padded columns={3}>
             <Grid.Row>
               <Grid.Column>
-                <ActivitiesList activities={this.state.activities} />
+                <ActivitiesList
+                  postActivity={this.postActivity}
+                  activities={this.state.activities}
+
+                />
               </Grid.Column>
               <Grid.Column>
                 <ItineraryTimeline
                   itineraries={this.state.itineraries}
                   selectedItinerary={this.state.selectedItinerary}
+                  clearItinerary={this.clearSelectedItinerary}
                   selectItinerary={this.selectedItinerary}
                   dayRanges={this.state.dayRanges}
                 />
