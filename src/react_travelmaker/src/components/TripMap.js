@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal, Image, Header, List, Card } from "semantic-ui-react";
+import { Card } from "semantic-ui-react";
 
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";

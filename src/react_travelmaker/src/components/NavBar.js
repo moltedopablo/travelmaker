@@ -1,5 +1,5 @@
 import React from "react";
-import { Dropdown, Menu } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
 
 class NavBar extends React.Component {
   constructor(props) {

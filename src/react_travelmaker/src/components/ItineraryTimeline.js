@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal, Image, Header, List, Card } from "semantic-ui-react";
+import { Button, List, Card } from "semantic-ui-react";
 import { Timeline, TimelineItem } from "vertical-timeline-component-for-react";
 
 import EmptySpace from "./EmptySpace";
@@ -7,6 +7,11 @@ import EmptySpace from "./EmptySpace";
 class ItineraryTimeline extends React.Component {
   constructor(props) {
     super(props);
+    this.clearSelectedItinerary = this.clearSelectedItinerary.bind(this);
+  }
+
+  clearSelectedItinerary() {
+    this.props.clearItinerary();
   }
 
   render() {
@@ -20,7 +25,15 @@ class ItineraryTimeline extends React.Component {
           <Card.Header>
             {typeof this.currentItinerary === "undefined"
               ? "Itineraries"
-              : this.currentItinerary.title}
+              : "Itinerary: " + this.currentItinerary.title}
+            <Button floated="right" icon="add" />
+            {this.props.selectedItinerary && (
+              <Button
+                floated="right"
+                icon="undo"
+                onClick={e => this.clearSelectedItinerary(e)}
+              />
+            )}
           </Card.Header>
         </Card.Content>
         <Card.Content>

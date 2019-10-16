@@ -10,7 +10,8 @@ class EmptySpace extends React.Component {
     return (
       <div>
         <p class="empty-message">
-          Wow, such an empty space, so sad, please add some {this.props.elementName} :)
+          Wow, such an empty space, so sad, please add some{" "}
+          {this.props.elementName} :)
         </p>
         <Placeholder fluid>
           <Placeholder.Line />

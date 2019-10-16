@@ -41,7 +41,7 @@ ui.list .list > .item > .icon + .content,
   padding: 0 0 0 0.5em;
   vertical-align: top;
 }
-.ui.list>.item{
+.ui.list > .item {
   text-align: left;
 }
 
@@ -60,7 +60,7 @@ ui.list .list > .item > .icon + .content,
 
 .ui.red.button,
 .ui.red.buttons .button {
-  background-color: #ff5454;
+  background-color: #ef6d6d;
 }
 
 .empty-message {

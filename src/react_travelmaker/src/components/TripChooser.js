@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal, Image, Header, List, Form } from "semantic-ui-react";
+import { Button, Modal, List, Form } from "semantic-ui-react";
 
 class TripChooser extends React.Component {
   constructor(props) {
