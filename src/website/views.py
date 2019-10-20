@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from .models import Activity, Trip, Itinerary, DayRange, Reservation, DayRangeActivities
+from .models import Activity, Trip, Itinerary, Reservation, ActivitiesItinerary
 from rest_framework import viewsets
-from .serializers import ActivitySerializer, TripSerializer, ItinerarySerializer, DayRangeSerializer, \
-    ReservationSerializer, DayRangeActivitiesSerializer
+from .serializers import ActivitySerializer, TripSerializer, ItinerarySerializer, ReservationSerializer, \
+    ActivitiesItinerarySerializer
 
 
 class TripViewSet(viewsets.ModelViewSet):
@@ -16,21 +16,16 @@ class ActivityViewSet(viewsets.ModelViewSet):
     filter_fields = ('trip', 'title', 'description', 'order')
 
 
+class ActivitiesItineraryViewSet(viewsets.ModelViewSet):
+    queryset = ActivitiesItinerary.objects.all()
+    serializer_class = ActivitiesItinerarySerializer
+    filter_fields = ('itinerary', 'activity', 'day')
+
+
 class ItineraryViewSet(viewsets.ModelViewSet):
     queryset = Itinerary.objects.all()
     serializer_class = ItinerarySerializer
     filter_fields = ('trip', 'start_date', 'title', 'duration')
-
-
-class DayRangeViewSet(viewsets.ModelViewSet):
-    queryset = DayRange.objects.all()
-    serializer_class = DayRangeSerializer
-    filter_fields = ('itinerary', 'start', 'end', 'activities')
-
-
-class DayRangeActivitiesViewSet(viewsets.ModelViewSet):
-    queryset = DayRangeActivities.objects.all()
-    serializer_class = DayRangeActivitiesSerializer
 
 
 class ReservationViewSet(viewsets.ModelViewSet):

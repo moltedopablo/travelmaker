@@ -30,22 +30,13 @@ class Itinerary(models.Model):
         return self.title
 
 
-class DayRange(models.Model):
-    itinerary = models.ForeignKey(Itinerary, on_delete=models.CASCADE)
-    start = models.IntegerField()
-    end = models.IntegerField()
-    activities = models.ManyToManyField(Activity, through='DayRangeActivities')
-
-    def __str__(self):
-        return "{} - {}".format(self.start, self.end)
-
-
-class DayRangeActivities(models.Model):
+class ActivitiesItinerary(models.Model):
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
-    day_range = models.ForeignKey(DayRange, on_delete=models.CASCADE)
+    itinerary = models.ForeignKey(Itinerary, on_delete=models.CASCADE)
+    day = models.IntegerField()
 
     def __str__(self):
-        return str(self.day_range)
+        return str(self.day + ' ' + self.activity)
 
 
 class Reservation(models.Model):

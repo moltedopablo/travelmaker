@@ -7,9 +7,8 @@ router = routers.DefaultRouter()
 router.register(r'trips', views.TripViewSet)
 router.register(r'activities', views.ActivityViewSet)
 router.register(r'itineraries', views.ItineraryViewSet)
-router.register(r'day_ranges', views.DayRangeViewSet)
+router.register(r'activities_itinerary', views.ActivitiesItineraryViewSet)
 router.register(r'reservations', views.ReservationViewSet)
-router.register(r'day_range_activities', views.DayRangeActivitiesViewSet)
 
 urlpatterns = [
     url(r'api/', include(router.urls)),
