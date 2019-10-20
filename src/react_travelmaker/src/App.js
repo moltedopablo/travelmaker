@@ -17,7 +17,7 @@ class App extends React.Component {
       selectedItinerary: null,
       trips: [],
       activities: [],
-      dayRanges: [],
+      activitiesItinerary: [],
       itineraries: []
     };
 
@@ -29,7 +29,7 @@ class App extends React.Component {
     this.postTrip = this.postTrip.bind(this);
     this.postActivity = this.postActivity.bind(this);
     this.selectTrip = this.selectTrip.bind(this);
-    this.fetchDayRanges = this.fetchDayRanges.bind(this);
+    this.fetchActivitiesItinerary = this.fetchActivitiesItinerary.bind(this);
     this.selectedItinerary = this.selectedItinerary.bind(this);
   }
 
@@ -61,11 +61,11 @@ class App extends React.Component {
       });
   }
 
-  fetchDayRanges(itinerary) {
-    fetch("//localhost:8000/api/day_ranges/?format=json&itinerary=" + itinerary)
+  fetchActivitiesItinerary(itinerary) {
+    fetch("//localhost:8000/api/activities_itinerary/?format=json&itinerary=" + itinerary)
       .then(res => res.json())
       .then(data => {
-        this.setState({ dayRanges: data });
+        this.setState({ activitiesItinerary: data });
       });
   }
 
@@ -94,8 +94,7 @@ class App extends React.Component {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        trip:
-          "http://localhost:8000/api/trips/" + this.state.selectedTrip + "/",
+        trip: this.state.selectedTrip,
         title: title,
         description: description
       })
@@ -116,8 +115,8 @@ class App extends React.Component {
 
   selectedItinerary(itinerary) {
     this.setState({ selectedItinerary: itinerary });
-    this.setState({ dayRanges: [] });
-    this.fetchDayRanges(itinerary);
+    this.setState({ activitiesItinerary: [] });
+    this.fetchActivitiesItinerary(itinerary);
   }
 
   clearTrip() {
@@ -149,16 +148,17 @@ class App extends React.Component {
                 <ActivitiesList
                   postActivity={this.postActivity}
                   activities={this.state.activities}
-
+                  selectedItinerary={this.state.selectedItinerary}
                 />
               </Grid.Column>
               <Grid.Column>
                 <ItineraryTimeline
                   itineraries={this.state.itineraries}
+                  activities={this.state.activities}
                   selectedItinerary={this.state.selectedItinerary}
                   clearItinerary={this.clearSelectedItinerary}
                   selectItinerary={this.selectedItinerary}
-                  dayRanges={this.state.dayRanges}
+                  activitiesItinerary={this.state.activitiesItinerary}
                 />
               </Grid.Column>
               <Grid.Column>

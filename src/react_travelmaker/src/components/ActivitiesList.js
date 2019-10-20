@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal, List, Card, Form } from "semantic-ui-react";
+import { Button, Modal, List, Card, Form, Select } from "semantic-ui-react";
 
 import EmptySpace from "./EmptySpace";
 
@@ -37,6 +37,10 @@ class ActivitiesList extends React.Component {
   }
 
   render() {
+    const daysOptions = Array.from({ length: 30 }, (v, k) => {
+      const n = k + 1;
+      return { key: n, value: n, text: "Day " + n };
+    });
     return (
       <div>
         <Card fluid>
@@ -57,9 +61,20 @@ class ActivitiesList extends React.Component {
               )}
               {this.props.activities.map(activity => (
                 <List.Item>
-                  <List.Content floated="right">
-                    <Button>Add</Button>
-                  </List.Content>
+                  {this.props.selectedItinerary && (
+                    <List.Content floated="right">
+                      <Form>
+                        <Form.Group>
+                          <Select
+                            compact
+                            placeholder="Select"
+                            options={daysOptions}
+                          />
+                          <Form.Button>Add</Form.Button>
+                        </Form.Group>
+                      </Form>
+                    </List.Content>
+                  )}
                   <List.Icon name="ligth-red map marker alternate" />
                   <List.Content>
                     <List.Header>{activity.title}</List.Header>
@@ -91,14 +106,12 @@ class ActivitiesList extends React.Component {
                   value={this.state.description}
                   onChange={this.handleInputChange}
                 />
-
-                <div class="ui buttons">
+                <Button.Group>
                   <Form.Button color="red">Submit</Form.Button>
-                  <div class="or"></div>
                   <Form.Button onClick={e => this.closeNewActivityPopup(e)}>
                     Cancel
                   </Form.Button>
-                </div>
+                </Button.Group>
               </Form>
             </Modal.Description>
           </Modal.Content>

@@ -1,6 +1,8 @@
 import React from "react";
+import _ from "lodash";
 import { Button, List, Card } from "semantic-ui-react";
 import { Timeline, TimelineItem } from "vertical-timeline-component-for-react";
+
 
 import EmptySpace from "./EmptySpace";
 
@@ -18,6 +20,9 @@ class ItineraryTimeline extends React.Component {
     this.currentItinerary = this.props.itineraries.find(obj => {
       return obj.id === this.props.selectedItinerary;
     });
+
+    const days = _.groupBy(this.props.activitiesItinerary, 'day');
+    const activities = _.keyBy(this.props.activities, 'id')
 
     return (
       <Card fluid>
@@ -62,21 +67,21 @@ class ItineraryTimeline extends React.Component {
               </List>
             )}
           {this.props.selectedItinerary !== null &&
-            this.props.dayRanges.length > 0 && (
+            this.props.activitiesItinerary.length > 0 && (
               <Timeline lineColor={"#ddd"}>
-                {this.props.dayRanges.map(dayRange => (
+                {Object.keys(days).map(day => (
                   <TimelineItem
-                    dateText={"Day " + dayRange.start + " - " + dayRange.end}
+                    dateText={"Day " + day}
                     style={{ color: "#e86971" }}
                   >
                     <List relaxed="very">
-                      {dayRange.activities.map(activity => (
+                      {days[day].map(activity => (
                         <List.Item>
                           <List.Icon name="map marker alternate" />
                           <List.Content>
-                            <List.Header>{activity.title}</List.Header>
+                            <List.Header>{activities[activity.activity].title}</List.Header>
                             <List.Description>
-                              {activity.description}
+                              {activities[activity.activity].description}
                             </List.Description>
                           </List.Content>
                         </List.Item>
