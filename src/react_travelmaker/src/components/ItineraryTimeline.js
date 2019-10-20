@@ -67,7 +67,7 @@ class ItineraryTimeline extends React.Component {
               </List>
             )}
           {this.props.selectedItinerary !== null &&
-            this.props.activitiesItinerary.length > 0 && (
+            this.props.activitiesItinerary.length > 0 && this.props.activities.length > 0 && (
               <Timeline lineColor={"#ddd"}>
                 {Object.keys(days).map(day => (
                   <TimelineItem

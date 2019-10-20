@@ -10,6 +10,8 @@ class NavBar extends React.Component {
     const selectedTrip = this.props.trips.find(obj => {
       return obj.id === this.props.selectedTrip;
     });
+    console.log(this.props.trips);
+    console.log(this.props.selectedTrip);
 
 
     return (

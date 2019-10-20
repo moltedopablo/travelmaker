@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid, Container } from "semantic-ui-react";
+import Cookies from "js-cookie";
 
 import NavBar from "./components/NavBar";
 import TripChooser from "./components/TripChooser";
@@ -12,6 +13,7 @@ import "./App.css";
 class App extends React.Component {
   constructor(props) {
     super(props);
+    console.log(Cookies.get("selected_trip"));
     this.state = {
       selectedTrip: null,
       selectedItinerary: null,
@@ -30,11 +32,18 @@ class App extends React.Component {
     this.postActivity = this.postActivity.bind(this);
     this.selectTrip = this.selectTrip.bind(this);
     this.fetchActivitiesItinerary = this.fetchActivitiesItinerary.bind(this);
-    this.selectedItinerary = this.selectedItinerary.bind(this);
+    this.selectItinerary = this.selectItinerary.bind(this);
   }
 
   componentDidMount() {
     this.fetchTrips();
+    if (typeof Cookies.get("selected_trip") !== "undefined") {
+      this.selectTrip(parseInt(Cookies.get("selected_trip")));
+    }
+
+    if (typeof Cookies.get("selected_itinerary") != "undefined") {
+      this.selectItinerary(parseInt(Cookies.get("selected_itinerary")));
+    }
   }
 
   fetchTrips() {
@@ -62,7 +71,10 @@ class App extends React.Component {
   }
 
   fetchActivitiesItinerary(itinerary) {
-    fetch("//localhost:8000/api/activities_itinerary/?format=json&itinerary=" + itinerary)
+    fetch(
+      "//localhost:8000/api/activities_itinerary/?format=json&itinerary=" +
+        itinerary
+    )
       .then(res => res.json())
       .then(data => {
         this.setState({ activitiesItinerary: data });
@@ -106,6 +118,7 @@ class App extends React.Component {
   }
 
   selectTrip(trip) {
+    Cookies.set("selected_trip", trip);
     this.setState({ selectedTrip: trip });
     this.setState({ selectedItinerary: null });
     this.fetchTrips();
@@ -113,7 +126,8 @@ class App extends React.Component {
     this.fetchActivities(trip);
   }
 
-  selectedItinerary(itinerary) {
+  selectItinerary(itinerary) {
+    Cookies.set("selected_itinerary", itinerary);
     this.setState({ selectedItinerary: itinerary });
     this.setState({ activitiesItinerary: [] });
     this.fetchActivitiesItinerary(itinerary);
@@ -157,7 +171,7 @@ class App extends React.Component {
                   activities={this.state.activities}
                   selectedItinerary={this.state.selectedItinerary}
                   clearItinerary={this.clearSelectedItinerary}
-                  selectItinerary={this.selectedItinerary}
+                  selectItinerary={this.selectItinerary}
                   activitiesItinerary={this.state.activitiesItinerary}
                 />
               </Grid.Column>
