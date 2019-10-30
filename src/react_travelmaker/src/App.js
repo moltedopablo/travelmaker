@@ -33,6 +33,7 @@ class App extends React.Component {
     this.selectTrip = this.selectTrip.bind(this);
     this.fetchActivitiesItinerary = this.fetchActivitiesItinerary.bind(this);
     this.selectItinerary = this.selectItinerary.bind(this);
+    this.postActivityDay = this.postActivityDay.bind(this);
   }
 
   componentDidMount() {
@@ -117,6 +118,27 @@ class App extends React.Component {
       });
   }
 
+  postActivityDay(day, activity) {
+    fetch("//localhost:8000/api/activities_itinerary/?format=json", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        activity: activity,
+        day: day,
+        itinerary: this.state.selectedItinerary
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          activitiesItinerary: [...this.state.activitiesItinerary, {day: day, activity: activity}]
+        })
+      });
+  }
+
   selectTrip(trip) {
     Cookies.set("selected_trip", trip);
     this.setState({ selectedTrip: trip });
@@ -163,6 +185,7 @@ class App extends React.Component {
                   postActivity={this.postActivity}
                   activities={this.state.activities}
                   selectedItinerary={this.state.selectedItinerary}
+                  postActivityDay={this.postActivityDay}
                 />
               </Grid.Column>
               <Grid.Column>

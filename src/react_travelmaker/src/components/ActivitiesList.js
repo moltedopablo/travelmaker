@@ -9,6 +9,7 @@ class ActivitiesList extends React.Component {
     this.state = { newActivity: false, title: null, description: null };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDayChange = this.handleDayChange.bind(this);
   }
 
   openNewActivityPopup() {
@@ -23,16 +24,24 @@ class ActivitiesList extends React.Component {
     const target = event.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
-
     this.setState({
       [name]: value
     });
+  }
+
+  handleDayChange(event, value){
+    this.setState({day:value.value});
   }
 
   handleSubmit(event) {
     this.props.postActivity(this.state.title, this.state.description);
     this.closeNewActivityPopup();
     this.setState({ newActivity: false, title: null, description: null });
+    event.preventDefault();
+  }
+
+  handleSubmitDay(event, activityId) {
+    this.props.postActivityDay(this.state.day, activityId);
     event.preventDefault();
   }
 
@@ -63,12 +72,14 @@ class ActivitiesList extends React.Component {
                 <List.Item>
                   {this.props.selectedItinerary && (
                     <List.Content floated="right">
-                      <Form>
+                      <Form onSubmit={e => this.handleSubmitDay(e, activity.id)}>
                         <Form.Group>
                           <Select
+                            name='day'
                             compact
                             placeholder="Select"
                             options={daysOptions}
+                            onChange={this.handleDayChange}
                           />
                           <Form.Button>Add</Form.Button>
                         </Form.Group>
