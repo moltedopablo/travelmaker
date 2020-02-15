@@ -18,7 +18,6 @@ class TripChooser extends React.Component {
 
   openNewTripPopup() {
     this.newTrip = true;
-    console.log(this.newTrip);
   }
 
   handleInputChange(event) {
